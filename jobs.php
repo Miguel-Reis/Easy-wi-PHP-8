@@ -228,12 +228,12 @@ if (!isset($ip) or $ui->escaped('SERVER_ADDR', 'server') == $ip or in_array($ip,
         $theOutput->updateCount($jobCount);
         print "\r\n" . 'Total jobs open after gameserver jobs are done: ' . $jobCount . "\r\n";
 
-        print 'Executing root server jobs' . "\r\n";
+        /*print 'Executing root server jobs' . "\r\n";
         include(EASYWIDIR . '/stuff/jobs/jobs_roots.php');
         $counJobs->execute();
         $jobCount = $counJobs->rowCount();
         $theOutput->updateCount($jobCount);
-        print "\r\n" . 'Total jobs open after root server jobs are done: ' . $jobCount . "\r\n";
+        print "\r\n" . 'Total jobs open after root server jobs are done: ' . $jobCount . "\r\n";*/
 
         print 'Executing Fastdownload jobs' . "\r\n";
         include(EASYWIDIR . '/stuff/jobs/jobs_webspace.php');

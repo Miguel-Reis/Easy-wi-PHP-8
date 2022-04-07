@@ -248,7 +248,7 @@ if (!isset($ip) or $ui->escaped('SERVER_ADDR', 'server') == $ip or in_array($ip,
                 // without the gameq value we cannot query. So this results need to be sorted out.
                 if (!in_array($row2['gameq'], array('', null, false))) {
 
-                    if ($row2['useQueryPort'] == 5) {
+                    /*if ($row2['useQueryPort'] == 5) {
                         $queryPort = $row2['port5'];
                     } else if ($row2['useQueryPort'] == 4) {
                         $queryPort = $row2['port4'];
@@ -256,9 +256,9 @@ if (!isset($ip) or $ui->escaped('SERVER_ADDR', 'server') == $ip or in_array($ip,
                         $queryPort = $row2['port3'];
                     } else if ($row2['useQueryPort'] == 2) {
                         $queryPort = $row2['port2'];
-                    } else {
+                    } else {*/
                         $queryPort = $row2['port'];
-                    }
+                   // }
 
                     if (isset($gameQv3Protocols[$row2['gameq']])) {
 
@@ -281,7 +281,7 @@ if (!isset($ip) or $ui->escaped('SERVER_ADDR', 'server') == $ip or in_array($ip,
 
                         $checkAtIPPort = $row2['serverip'] . ':';
 
-                        if ($row2['useQueryPort'] == 5) {
+                       /* if ($row2['useQueryPort'] == 5) {
                             $checkAtIPPort .= $row2['port5'];
                         } else if ($row2['useQueryPort'] == 4) {
                             $checkAtIPPort .= $row2['port4'];
@@ -289,9 +289,9 @@ if (!isset($ip) or $ui->escaped('SERVER_ADDR', 'server') == $ip or in_array($ip,
                             $checkAtIPPort .= $row2['port3'];
                         } else if ($row2['useQueryPort'] == 2) {
                             $checkAtIPPort .= $row2['port2'];
-                        } else {
+                        } else {*/
                             $checkAtIPPort .= $row2['port'];
-                        }
+                        //}
 
                         $serverBatchV2Array[] = array('id' => $row2['id'], 'type' => $row2['gameq'], 'host' => $checkAtIPPort);
 
@@ -326,7 +326,7 @@ if (!isset($ip) or $ui->escaped('SERVER_ADDR', 'server') == $ip or in_array($ip,
 
                 $gq = new \GameQ\GameQ();
                 $gq->addServers($servers);
-                $gq->setOption('timeout', 60);
+                // $gq->setOption('timeout', 3);
 
                 if (isset($dbConnect['debug']) and $dbConnect['debug'] == 1) {
                     $gq->setOption('debug', true);
@@ -346,7 +346,7 @@ if (!isset($ip) or $ui->escaped('SERVER_ADDR', 'server') == $ip or in_array($ip,
             if (count($servers) > 0) {
 
                 $gq = new GameQ();
-                $gq->setOption('timeout', 60);
+                // $gq->setOption('timeout', 3);
 
                 if (isset($dbConnect['debug']) and $dbConnect['debug'] == 1) {
                     $gq->setOption('debug', true);
@@ -406,6 +406,7 @@ if (!isset($ip) or $ui->escaped('SERVER_ADDR', 'server') == $ip or in_array($ip,
                 $numplayers = $v['gq_numplayers'];
                 $maxplayers = $v['gq_maxplayers'];
                 $map = $v['gq_mapname'];
+             
                 $password = ($v['gq_password'] == 1) ? 'Y' : 'N';
             } else {
                 $name = 'OFFLINE';
