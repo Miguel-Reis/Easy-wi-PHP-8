@@ -91,6 +91,6 @@ if (isset($page_active) and $page_active == 'Y') {
     include(IncludeTemplate($template_to_use, 'page_footer.tpl', 'cms'));
 
 } else {
-    //redirect($page_data->pageurl . '/login.php');
+    redirect($page_data->pageurl . '/login.php');
 }
 $sql = null;
