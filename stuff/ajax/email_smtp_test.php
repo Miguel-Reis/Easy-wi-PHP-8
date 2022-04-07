@@ -42,7 +42,8 @@ if (!defined('AJAXINCLUDED')) {
     die('Do not access directly!');
 }
 
-include(EASYWIDIR . '/third_party/phpmailer/PHPMailerAutoload.php');
+include(EASYWIDIR . '/third_party/phpmailer/src/PHPMailer.php');
+include(EASYWIDIR . '/third_party/phpmailer/src/SMTP.php');
 
 if (!class_exists('SSH2')) {
     include(EASYWIDIR . '/third_party/phpseclib/autoloader.php');
@@ -56,7 +57,8 @@ $errors = array();
 
 try {
 
-    $mail = new PHPMailer();
+    $mail = new PHPMailer(true);
+	$mail->SMTPDebug = SMTP::DEBUG_SERVER;
     $mail->CharSet = 'UTF-8';
     $mail->isSMTP();
     $mail->SMTPAuth = true;

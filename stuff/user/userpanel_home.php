@@ -52,6 +52,7 @@ if (isset($admin_id) and $reseller_id != 0 and $admin_id != $reseller_id) {
 
 $statsArray = array(
     'gameserverActive' => 0,
+    'gameserverCrashedPercent' => 0,
     'gameserverSlotsActive' => 0,
     'gameserverSlotsUsed' => 0,
     'gameserverNoPassword' => 0,
@@ -83,7 +84,7 @@ while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
 $statsArray['warningTotal'] = $statsArray['gameserverNoPassword'] + $statsArray['gameserverNoTag'] + $statsArray['gameserverNotRunning'] + $statsArray['voiceserverCrashed'];
 $statsArray['ticketsTotal'] = $statsArray['ticketsInProcess'];
 
-if ($ui->smallletters('w', 2, 'get') == 'da' or (!$ui->smallletters('w', 2, 'get') and !$ui->smallletters('d', 2, 'get'))) {
+if ($ui->smallletters('w', 2, 'get') == 'da' or $ui->smallletters('w', 2, 'get') == 'ls' or (!$ui->smallletters('w', 2, 'get') and !$ui->smallletters('d', 2, 'get'))) {
 
     $statsArray['gameserverActivePercent'] = ($statsArray['gameserverInstalled'] > 0) ? round($statsArray['gameserverActive'] / ($statsArray['gameserverInstalled'] / 100), 2) : 0;
     $statsArray['gameserverSlotsUsedPercent'] = ($statsArray['gameserverSlotsActive'] > 0) ? round($statsArray['gameserverSlotsUsed'] / ($statsArray['gameserverSlotsActive'] / 100), 2) : 0;

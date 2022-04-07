@@ -39,6 +39,8 @@
  */
 
 use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 
 if (!defined('EASYWIDIR')) {
@@ -651,10 +653,11 @@ if (!function_exists('passwordgenerate')) {
         if (!isset($aeskey)) {
             include(EASYWIDIR . '/stuff/keyphrasefile.php');
         }
-        if (!class_exists('PHPMailer')) {
+        if (!class_exists('PHPMailer\PHPMailer\PHPMailer')){
 
-            include(EASYWIDIR . '/third_party/phpmailer6/PHPMailer.php');
-            include(EASYWIDIR . '/third_party/phpmailer6/SMTP.php');
+			include(EASYWIDIR . '/third_party/phpmailer/src/Exception.php');
+            include(EASYWIDIR . '/third_party/phpmailer/src/PHPMailer.php');
+            include(EASYWIDIR . '/third_party/phpmailer/src/SMTP.php');
         }
 
         if ($template == 'emailnewticket') {
@@ -1282,7 +1285,7 @@ if (!function_exists('passwordgenerate')) {
 
         list($header, $content) = parseHeaders($respones);
         if($request_info["http_code"] == 200){
-            $json = json_decode($content);
+            $json = json_decode($content,true,1);
 
             if (($developer == 'N' and is_object($json) and property_exists($json, 'tag_name') or ($developer == 'Y' and is_array($json) and isset($json[0]) and is_object($json[0]) and property_exists($json[0], 'name')))) {
                 $version = ($developer == 'Y') ? $json[0]->name : $json->tag_name;
@@ -1616,9 +1619,9 @@ if (!function_exists('passwordgenerate')) {
             $ajaxSource = '"bServerSide" : true,"sAjaxSource": "' . $ajaxSource. '",';
         }
 
-        $htmlExtraInformation['css'][] = '<link href="css/default/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css">';
-        $htmlExtraInformation['js'][] = '<script src="js/default/plugins/datatables/jquery.datatables.js" type="text/javascript"></script>';
-        $htmlExtraInformation['js'][] = '<script src="js/default/plugins/datatables/datatables.bootstrap.js" type="text/javascript"></script>';
+        $htmlExtraInformation['css'][] = '<link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">';
+        $htmlExtraInformation['js'][] = '<script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js" type="text/javascript"></script>';
+        $htmlExtraInformation['js'][] = '<script src="//cdn.datatables.net/1.11.3/js/dataTables.bootstrap4.min.js" type="text/javascript"></script>';
         $htmlExtraInformation['js'][] = "<script type='text/javascript'>
 $(function() {
     $('#dataTable').dataTable({

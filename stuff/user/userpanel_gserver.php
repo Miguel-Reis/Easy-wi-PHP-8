@@ -1,40 +1,5 @@
 <?php
 
-/**
- * File: userpanel_gserver.php.
- * Author: Ulrich Block
- * Contact: <ulrich.block@easy-wi.com>
- *
- * This file is part of Easy-WI.
- *
- * Easy-WI is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * Easy-WI is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with Easy-WI.  If not, see <http://www.gnu.org/licenses/>.
- *
- * Diese Datei ist Teil von Easy-WI.
- *
- * Easy-WI ist Freie Software: Sie koennen es unter den Bedingungen
- * der GNU General Public License, wie von der Free Software Foundation,
- * Version 3 der Lizenz oder (nach Ihrer Wahl) jeder spaeteren
- * veroeffentlichten Version, weiterverbreiten und/oder modifizieren.
- *
- * Easy-WI wird in der Hoffnung, dass es nuetzlich sein wird, aber
- * OHNE JEDE GEWAEHELEISTUNG, bereitgestellt; sogar ohne die implizite
- * Gewaehrleistung der MARKTFAEHIGKEIT oder EIGNUNG FUER EINEN BESTIMMTEN ZWECK.
- * Siehe die GNU General Public License fuer weitere Details.
- *
- * Sie sollten eine Kopie der GNU General Public License zusammen mit diesem
- * Programm erhalten haben. Wenn nicht, siehe <http://www.gnu.org/licenses/>.
- */
 if ((!isset($main) or $main != 1) or (!isset($user_id) or (isset($user_id) and !$pa['restart']))) {
     header('Location: userpanel.php');
     die('No Access');
@@ -111,7 +76,7 @@ if ($ui->w('action', 4, 'post') and !token(true)) {
     }
 
     if ($query->rowCount() > 0) {
-        $template_file = 'userpanel_gserver_log.tpl';
+        $template_file = 'userpanel_gserver_list.tpl';
     } else {
         $template_file = 'userpanel_404.tpl';
     }
@@ -231,14 +196,14 @@ if ($ui->w('action', 4, 'post') and !token(true)) {
 
             $appServer->startApp();
 
-            $template_file = 'Restart done';
+            $template_file = '<br><br><br><center></a>Aguarde......  </center>';
             $loguseraction = "%start% %gserver% $gsip:$port";
 
         } else if ($ui->st('d', 'get') == 'st') {
 
             $appServer->stopApp();
 
-            $template_file = 'Stop done';
+            $template_file = '<br><br><br><center></a>Aguarde......  </center>';
             $loguseraction = "%stop% %gserver% $gsip:$port";
 
         } else if ($ui->st('d', 'get') == 'du') {
@@ -980,11 +945,14 @@ if ($ui->w('action', 4, 'post') and !token(true)) {
 } else {
 
     $table = array();
+	
+	$xtreamid = $_REQUEST["id"];
 
-    $query = $sql->prepare("SELECT AES_DECRYPT(`ftppassword`,?) AS `cftppass`,g.*,s.`servertemplate`,s.`upload`,t.`id` AS `tid`,t.`ramLimited`,t.`shorten`,t.`protected` AS `tp`,u.`cname` FROM `gsswitch` g INNER JOIN `serverlist` s ON g.`serverid`=s.`id` INNER JOIN `servertypes` t ON s.`servertype`=t.`id` INNER JOIN `userdata` u ON g.`userid`=u.`id` WHERE g.`active`='Y' AND g.`userid`=? AND g.`resellerid`=? ORDER BY g.`serverip`,g.`port`");
+    $query = $sql->prepare("SELECT AES_DECRYPT(`ftppassword`,?) AS `cftppass`,g.*,s.`servertemplate`,s.`upload`,t.`id` AS `tid`,t.`ramLimited`,t.`shorten`,t.`protected` AS `tp`,u.`cname`,t.`liveConsole` FROM `gsswitch` g INNER JOIN `serverlist` s ON g.`serverid`=s.`id` INNER JOIN `servertypes` t ON s.`servertype`=t.`id` INNER JOIN `userdata` u ON g.`userid`=u.`id` WHERE g.`active`='Y' AND g.`userid`=? AND g.`resellerid`=? AND g.`id`=$xtreamid ORDER BY g.`serverip`,g.`port`");
     $query2 = $sql->prepare("SELECT `ftpport` FROM `rserverdata` WHERE `id`=? LIMIT 1");
     $query3 = $sql->prepare("SELECT 1 FROM `servertypes` WHERE `id`=? AND `ftpAccess`='N' LIMIT 1");
     $query->execute(array($aeskey, $user_id,$resellerLockupID));
+	
     while ($row = $query->fetch(PDO::FETCH_ASSOC)) {
         if (!isset($_SESSION['sID']) or in_array($row['id'],$substituteAccess['gs'])) {
             $description = $row['description'];
@@ -1007,6 +975,9 @@ if ($ui->w('action', 4, 'post') and !token(true)) {
             $notified = $row['notified'];
             $cftppass = $row['cftppass'];
             $servertemplate = $row['servertemplate'];
+			$liveConsole = $row['liveConsole'];
+			
+            
 
             $address = $ip . ':' . $port;
             $map = (in_array($row['queryMap'], array(false, null, ''))) ? 'Unknown' : $row['queryMap'];

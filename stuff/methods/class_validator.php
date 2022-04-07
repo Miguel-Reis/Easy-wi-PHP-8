@@ -41,9 +41,9 @@ class ValidateUserinput {
 
     private function magic_quotes ($value) {
 
-        if (function_exists('get_magic_quotes_gpc') and get_magic_quotes_gpc() == 1) {
-            $value = stripcslashes($value);
-        }
+        /*if (function_exists('get_magic_quotes_gpc') and get_magic_quotes_gpc() == 1) {
+            $value = stripslashes($value);
+        }*/
 
         return $value;
     }

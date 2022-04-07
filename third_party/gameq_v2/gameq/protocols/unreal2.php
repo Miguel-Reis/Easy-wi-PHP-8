@@ -294,7 +294,7 @@ abstract class GameQ_Protocols_Unreal2 extends GameQ_Protocols
 		$str = '';
 		for ($i = 0, $ii = strlen($encstr); $i < $ii; $i += 2)
 		{
-			$str .= $encstr{$i};
+			$str .= $encstr[$i];
 		}
 
 		return $str;

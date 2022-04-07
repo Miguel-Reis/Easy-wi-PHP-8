@@ -802,6 +802,23 @@ class masterServer {
 
         return $this->sshConnectAndExecute (false, true);
     }
+	
+	/*public function getUptime(){
+		if ($this->os == 'L'){
+			$this->exec('uptime');
+		}else{
+			return false;
+		}
+		$response = $this->sshConnectAndExecute (false, true);
+        if(isset($response) && strlen($response) > 0){
+            $uptime = explode(' up ', $data);
+			$uptime = explode(',', $uptime[1]);
+			$uptime = $uptime[0].', '.$uptime[1];
+
+            return $time;
+        }
+        return false;
+	}*/
 
     // Add Server space data - Nexus633
     // Fix Json_decode error

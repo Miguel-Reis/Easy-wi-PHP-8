@@ -338,7 +338,7 @@ class EasyWiFTP {
     public function checkFolders ($dir, $searchFor, $maxDepth = false, $currentDepth = 0) {
 
         $folders = array();
-        $donotsearch = array('bin', 'cfg', 'cl_dlls', 'dlls', 'gfx', 'hl2', 'manual', 'maps', 'materials', 'models', 'particles', 'recource', 'scenes', 'scripts', 'sound', 'sounds', 'textures', 'valve', 'reslists');
+        $donotsearch = array('bin', 'cfg', 'cl_dlls', 'gfx', 'hl2', 'manual', 'maps', 'materials', 'models', 'particles', 'recource', 'scenes', 'scripts', 'sound', 'sounds', 'textures', 'valve', 'reslists');
 
         $spl = strlen($searchFor) * (-1);
 
